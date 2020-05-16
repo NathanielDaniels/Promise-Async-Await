@@ -30,7 +30,7 @@ function payInternetBill(income, callback) {
   callback(income - 50);
 }
 
-getIncome(function (income) {
+getIncome(function (income, incomeAfterRent) {
   // call payRent inside "getIncome" callback
   payRent(income, function (incomeAfterRent) {
     console.log("Income after Rent: ", incomeAfterRent); //450
