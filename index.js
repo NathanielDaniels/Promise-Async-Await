@@ -29,23 +29,38 @@ function payUtilityBills(income, callback) {
 function payInternetBill(income, callback) {
   callback(income - 50);
 }
+function payPhoneCharges(income, callback) {
+  callback(income - 75);
+}
+function payForRepairs(income, callback) {
+  callback(income - 66);
+}
 
-getIncome(function (income, incomeAfterRent) {
+getIncome(function (income) {
   // call payRent inside "getIncome" callback
   payRent(income, function (incomeAfterRent) {
     console.log("Income after Rent: ", incomeAfterRent); //450
-  });
-  //! Below not correct, must change income (after bills) before calling next function
-  payUtilityBills(incomeAfterRent, function (incomeAfterUtility) {
-    console.log("Income after Utilities", incomeAfterUtility); //!563 (should be 363)
-  });
-  payInternetBill(incomeAfterInternet, function (incomeAfterInternet) {
-    console.log("Income after internet", incomeAfterInternet); //!600 (should be 313)
+    // return (income = incomeAfterRent);
+    payUtilityBills(incomeAfterRent, function (incomeAfterUtility) {
+      console.log("Income after Utilities", incomeAfterUtility); //363
+      // return (income = incomeAfterUtility);
+      payInternetBill(incomeAfterUtility, function (incomeAfterInternet) {
+        console.log("Income after internet", incomeAfterInternet); //313
+        // return (income = incomeAfterInternet);
+        payPhoneCharges(incomeAfterInternet, function (incomeAfterPhone) {
+          console.log("Income after Phone:", incomeAfterPhone);
+          payForRepairs(incomeAfterPhone, function (incomeAfterRepairs) {
+            console.log(`Income after Repairs:`, incomeAfterRepairs);
+            console.log(`Total left: $${incomeAfterRepairs}`);
+          });
+        });
+      });
+    });
   });
 });
 
 //===============================================
-//! First trial run working (without callbacks)
+//! First trial run working (without callbacks). Totals pushed to "newIncome" array
 
 // let newIncome = [];
 // const getIncome = (income, callback) => {
