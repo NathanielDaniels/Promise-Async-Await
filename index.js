@@ -14,50 +14,62 @@
 //=======================
 //* Step 2
 
-function getIncome(callback) {
-  callback(650);
-}
+// function getIncome(callback) {
+//   callback(650);
+// }
 
-function payRent(income, callback) {
-  callback(income - 200);
-}
+// function payRent(income, callback) {
+//   callback(income - 200);
+// }
 
-function payUtilityBills(income, callback) {
-  callback(income - 87);
-}
+// function payUtilityBills(income, callback) {
+//   callback(income - 87);
+// }
 
-function payInternetBill(income, callback) {
-  callback(income - 50);
-}
-function payPhoneCharges(income, callback) {
-  callback(income - 75);
-}
-function payForRepairs(income, callback) {
-  callback(income - 66);
-}
+// function payInternetBill(income, callback) {
+//   callback(income - 50);
+// }
+// function payPhoneCharges(income, callback) {
+//   callback(income - 75);
+// }
+// function payForRepairs(income, callback) {
+//   callback(income - 66);
+// }
 
-getIncome(function (income) {
-  // call payRent inside "getIncome" callback
-  payRent(income, function (incomeAfterRent) {
-    console.log("Income after Rent: ", incomeAfterRent); //450
-    // return (income = incomeAfterRent);
-    payUtilityBills(incomeAfterRent, function (incomeAfterUtility) {
-      console.log("Income after Utilities", incomeAfterUtility); //363
-      // return (income = incomeAfterUtility);
-      payInternetBill(incomeAfterUtility, function (incomeAfterInternet) {
-        console.log("Income after internet", incomeAfterInternet); //313
-        // return (income = incomeAfterInternet);
-        payPhoneCharges(incomeAfterInternet, function (incomeAfterPhone) {
-          console.log("Income after Phone:", incomeAfterPhone);
-          payForRepairs(incomeAfterPhone, function (incomeAfterRepairs) {
-            console.log(`Income after Repairs:`, incomeAfterRepairs);
-            console.log(`Total left: $${incomeAfterRepairs}`);
-          });
-        });
-      });
-    });
-  });
+// getIncome(function (income) {
+//   // call payRent inside "getIncome" callback
+//   payRent(income, function (incomeAfterRent) {
+//     console.log("Income after Rent: ", incomeAfterRent); //450
+//     // return (income = incomeAfterRent);
+//     payUtilityBills(incomeAfterRent, function (incomeAfterUtility) {
+//       console.log("Income after Utilities", incomeAfterUtility); //363
+//       // return (income = incomeAfterUtility);
+//       payInternetBill(incomeAfterUtility, function (incomeAfterInternet) {
+//         console.log("Income after internet", incomeAfterInternet); //313
+//         // return (income = incomeAfterInternet);
+//         payPhoneCharges(incomeAfterInternet, function (incomeAfterPhone) {
+//           console.log("Income after Phone:", incomeAfterPhone);
+//           payForRepairs(incomeAfterPhone, function (incomeAfterRepairs) {
+//             console.log(`Income after Repairs:`, incomeAfterRepairs);
+//             console.log(`Total left: $${incomeAfterRepairs}`);
+//           });
+//         });
+//       });
+//     });
+//   });
+// });
+
+//===============================================
+//! Promises
+
+let promise = new Promise(function (resolve, reject) {
+  // not taking our time to do the job
+  // resolve(123); // immediately give the result: 123
+  reject(new Error("…")); // ignored
+  setTimeout(() => resolve("…")); // ignored
 });
+
+console.log(promise);
 
 //===============================================
 //! First trial run working (without callbacks). Totals pushed to "newIncome" array
