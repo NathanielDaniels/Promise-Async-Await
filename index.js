@@ -11,7 +11,7 @@
 //   console.log(income); //650
 // });
 
-//=======================
+//* =======================
 //* Step 2
 
 // function getIncome(callback) {
@@ -59,18 +59,74 @@
 //   });
 // });
 
-//===============================================
+//* ===============================================
 //! Promises
 
-let promise = new Promise(function (resolve, reject) {
-  // not taking our time to do the job
-  // resolve(123); // immediately give the result: 123
-  reject(new Error("…")); // ignored
-  setTimeout(() => resolve("…")); // ignored
+// let promise = new Promise(function (resolve, reject) {
+//   // not taking our time to do the job
+//   resolve(123); // immediately give the result: 123
+//   reject(new Error("…")); // ignored
+//   setTimeout(() => resolve(123), 5000); // ignored
+// });
+
+// console.log(promise);
+
+//* ===========================
+//* .then
+
+//? The first argument of .then is a function that runs when the promise is resolved, and receives the result.
+//? The second argument of.then is a function that runs when the promise is rejected, and receives the error.
+//? For instance, here’s a reaction to a successfully resolved promise:
+
+// let promise = new Promise(function (resolve, reject) {
+//   // setTimeout(() => resolve("done!"), 1000);
+//   setTimeout(() => reject(new Error("Whoops!")), 1000);
+// });
+
+// // resolve runs the first function in .then
+// promise.then(
+//   (result) => console.log(result), // shows "done!" after 1 second
+//   (error) => console.log(error) // doesn't run
+// );
+
+//======
+//? If we’re interested only in successful completions, then we can provide only one function argument to.then:
+
+// let promise = new Promise((resolve) => {
+//   setTimeout(() => resolve("done!"), 1000);
+// });
+
+// promise.then((result) => console.log(result)); // shows "done!" after 1 second
+
+//* ===========================
+//* .catch
+
+//? If we’re interested only in errors, then we can use null as the first argument: .then(null, errorHandlingFunction). Or we can use .catch(errorHandlingFunction), which is exactly the same:
+
+let promise = new Promise((resolve, reject) => {
+  setTimeout(() => reject(new Error("whoops!"), 1000));
 });
 
-console.log(promise);
+//? .catch(f) is the same as promise.then(null, f)
+promise.catch((error) => console.log(error));
+// promise.then(null, () => {
+//   console.log(promise);
+// });
 
+//* ===========================
+//* .finally
+
+//? Just like there’s a finally clause in a regular try {...} catch {...}, there’s finally in promises.
+//? The call.finally(f) is similar to.then(f, f) in the sense that f always runs when the promise is settled: be it resolve or reject.
+
+//? finally is a good handler for performing cleanup, e.g.stopping our loading indicators, as they are not needed anymore, no matter what the outcome is.
+
+new Promise((res, rej) => {
+  // Do Something that takes time, and then call resolve/reject
+})
+  // Runs when the promise is settled, doesn't matter successfully or not
+  .finally(() => /* Stop loading indicator*/)
+  .then((result) => /* Show Results, err => show error */)
 //===============================================
 //! First trial run working (without callbacks). Totals pushed to "newIncome" array
 
