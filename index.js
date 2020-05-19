@@ -103,12 +103,12 @@
 
 //? If we’re interested only in errors, then we can use null as the first argument: .then(null, errorHandlingFunction). Or we can use .catch(errorHandlingFunction), which is exactly the same:
 
-let promise = new Promise((resolve, reject) => {
-  setTimeout(() => reject(new Error("whoops!"), 1000));
-});
+// let promise = new Promise((resolve, reject) => {
+//   setTimeout(() => reject(new Error("whoops!"), 1000));
+// });
 
-//? .catch(f) is the same as promise.then(null, f)
-promise.catch((error) => console.log(error));
+// //? .catch(f) is the same as promise.then(null, f)
+// promise.catch((error) => console.log(error));
 // promise.then(null, () => {
 //   console.log(promise);
 // });
@@ -121,12 +121,28 @@ promise.catch((error) => console.log(error));
 
 //? finally is a good handler for performing cleanup, e.g.stopping our loading indicators, as they are not needed anymore, no matter what the outcome is.
 
-new Promise((res, rej) => {
-  // Do Something that takes time, and then call resolve/reject
-})
-  // Runs when the promise is settled, doesn't matter successfully or not
-  .finally(() => /* Stop loading indicator*/)
-  .then((result) => /* Show Results, err => show error */)
+// new Promise((res, rej) => {
+//   // Do Something that takes time, and then call resolve/reject
+// })
+//   // Runs when the promise is settled, doesn't matter successfully or not
+//   .finally(() => /* Stop loading indicator*/)
+//   .then((result) => /* Show Results, err => show error */)
+
+//* ===========================
+//* Promise Practice
+
+let p = new Promise((res, rej) => {
+  let a = 2;
+  if (a == 2) {
+    console.log("success: a = 2");
+    res("success");
+  } else {
+    console.log(`fail: a = ${a}`);
+    rej("failed");
+  }
+});
+
+// p;
 //===============================================
 //! First trial run working (without callbacks). Totals pushed to "newIncome" array
 
