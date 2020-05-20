@@ -223,21 +223,65 @@
 //*===============================================================
 //* Async/Await Section.
 
-function makeRequest(location) {
-  return new Promise((res, rej) => {
-    console.log("making request to " + location);
+// function makeRequest(location) {
+//   return new Promise((res, rej) => {
+//     console.log("making request to " + location);
+//     if (location == "google") {
+//       res("Google says Hi!");
+//     } else {
+//       rej("Sorry, we can only speak with google at this time");
+//     }
+//   });
+// }
+// function processRequest(response) {
+//   return new Promise((res, rej) => {
+//     console.log("processing response");
+//     res(`Extra Information + ${response}`);
+//   });
+// }
+
+// // Testing myself
+// async function doWork() {
+//   console.log("response received!");
+//   try {
+//     const response = await makeRequest("google");
+//     console.log("response!!!!!! " + response);
+//     const processedRequest = await processRequest(response);
+//     console.log("request!!!!!!" + processedRequest);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
+
+//! Make request to google. catch errors
+
+function makeCall(location) {
+  return new Promise((req, res) => {
+    console.log("makeing call");
     if (location == "google") {
-      res("Google says Hi!");
+      req("Successful call to google");
     } else {
-      rej("Sorry, we can only speak with google at this time");
+      res("Can Only Make Calls to Google");
     }
   });
 }
-function processRequest(response) {
-  return new Promise((res, rej) => {
-    console.log("processing response");
-    res(`Extra Information + ${response}`);
+
+function networkResponse(message) {
+  return new Promise((res, req) => {
+    console.log("Response Received");
+    res("Extra Information: " + message);
   });
+}
+
+async function doWork() {
+  try {
+    const response = await makeCall("google");
+    console.log("response: " + response);
+    const netResp = await networkResponse(response);
+    console.log(netResp);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 //! This code gets replaced by async await (below)
@@ -257,17 +301,17 @@ function processRequest(response) {
 //* now with Async Await -----------
 //* You will find that using Async/await creates cleaner code. Instead of .then/.catch, we use try/catch
 
-async function doWork() {
-  try {
-    console.log("- response received -");
-    const response = await makeRequest("facebook");
-    // Returns logs + "Resolve" section of Promise ("making request to google" + "Google says Hi!")
-    const processedResponse = await processRequest(response);
-    console.log(processedResponse);
-  } catch (err) {
-    console.log(err);
-  }
-}
+// async function doWork() {
+//   try {
+//     console.log("- response received -");
+//     const response = await makeRequest("facebook");
+//     // Returns logs + "Resolve" section of Promise ("making request to google" + "Google says Hi!")
+//     const processedResponse = await processRequest(response);
+//     console.log(processedResponse);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
 
 doWork();
 
