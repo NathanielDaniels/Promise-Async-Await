@@ -131,18 +131,120 @@
 //* ===========================
 //* Promise Practice
 
-let p = new Promise((res, rej) => {
-  let a = 2;
-  if (a == 2) {
-    console.log("success: a = 2");
-    res("success");
-  } else {
-    console.log(`fail: a = ${a}`);
-    rej("failed");
-  }
+// let p = new Promise((res, rej) => {
+//   let a = 2;
+//   if (a == 2) {
+//     console.log("success: a = 2");
+//     res("success");
+//   } else {
+//     console.log(`fail: a = ${a}`);
+//     rej("failed");
+//   }
+// });
+
+// p.then((message) => {
+//   console.log(`this is in the then: ${message}`);
+// }).catch((message) => {
+//   console.log("error in catch: " + message);
+// });
+
+// let p = new Promise((res, rej) => {
+//   let a = 2;
+//   if (a == 2) {
+//     console.log("success: a = 2");
+//     res("success");
+//   } else {
+//     console.log(`fail: a = ${a}`);
+//     rej("failed");
+//   }
+// });
+
+// p.then((message) => {
+//   console.log(`this is in the then: ${message}`);
+// }).catch((message) => {
+//   console.log("error in catch: " + message);
+// });
+
+//=============
+
+// const recordVideoOne = new Promise((res, rej) => {
+//   res("video 1 recorded");
+// });
+// const recordVideoTwo = new Promise((res, rej) => {
+//   res("video 2 recorded");
+// });
+// const recordVideoThree = new Promise((res, rej) => {
+//   res("video 3 recorded");
+// });
+
+// Promise.all([recordVideoOne, recordVideoTwo, recordVideoThree]).then(
+//   (message) => {
+//     console.log("recordings: " + message);
+//   }
+// );
+// Promise.race([recordVideoOne, recordVideoTwo, recordVideoThree]).then(
+//   (message) => {
+//     console.log("recordings: " + message);
+//   }
+// );
+
+//===============
+//! Promise Test: Write a promise that logs 1,2,3 in order
+
+// let numberOne = new Promise((res, rej) => {
+//   res("1");
+//   rej("err");
+// });
+// let numberTwo = new Promise((res, rej) => {
+//   res("2");
+//   rej("err");
+// });
+// let numberThree = new Promise((res, rej) => {
+//   res("3");
+//   rej("err");
+// });
+
+// Promise.all([numberOne, numberTwo, numberThree])
+//   .then((messages) => {
+//     console.log(messages);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
+
+// numberOne.then((message) => {
+//   if (message == "2") {
+//     console.log(`numberOne working: ${message}`);
+//   } else {
+//     console.log(`numberOne failed: ${message} != 2`);
+//   }
+// });
+
+//*===============================================================
+//* Async/Await
+
+function makeRequest(location) {
+  return new Promise((resolve, reject) => {
+    console.log(`Making Request to ${location}`);
+    if (location == "google") {
+      resolve("Google says Hello!");
+    } else {
+      reject("We can only speak to Google!!");
+    }
+  });
+}
+
+function processRequest(response) {
+  return new Promise((resolve, reject) => {
+    console.log("Proccessing Response");
+    resolve(`Extra Information + ${response}`);
+  });
+}
+
+makeRequest("google").then((message) => {
+  console.log(message);
 });
 
-// p;
 //===============================================
 //! First trial run working (without callbacks). Totals pushed to "newIncome" array
 
