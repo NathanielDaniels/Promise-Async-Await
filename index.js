@@ -221,32 +221,63 @@
 // });
 
 //*===============================================================
-//* Async/Await
+//* Async/Await Section.
 
 function makeRequest(location) {
-  return new Promise((resolve, reject) => {
-    console.log(`Making Request to ${location}`);
+  return new Promise((res, rej) => {
+    console.log("making request to " + location);
     if (location == "google") {
-      resolve("Google says Hello!");
+      res("Google says Hi!");
     } else {
-      reject("We can only speak to Google!!");
+      rej("Sorry, we can only speak with google at this time");
     }
   });
 }
-
 function processRequest(response) {
-  return new Promise((resolve, reject) => {
-    console.log("Proccessing Response");
-    resolve(`Extra Information + ${response}`);
+  return new Promise((res, rej) => {
+    console.log("processing response");
+    res(`Extra Information + ${response}`);
   });
 }
 
-makeRequest("google").then((message) => {
-  console.log(message);
-});
+//! This code gets replaced by async await (below)
+// makeRequest("google")
+//   .then((response) => {
+//     console.log("response received");
+//     return processRequest(response);
+//   })
+//   .then((processedResponse) => {
+//     console.log(processedResponse);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
+//!=================================
 
+//* now with Async Await -----------
+//* You will find that using Async/await creates cleaner code. Instead of .then/.catch, we use try/catch
+
+async function doWork() {
+  try {
+    console.log("- response received -");
+    const response = await makeRequest("facebook");
+    // Returns logs + "Resolve" section of Promise ("making request to google" + "Google says Hi!")
+    const processedResponse = await processRequest(response);
+    console.log(processedResponse);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+doWork();
+
+//? Step 1: create promises (new Promis((response, reject) => {})) like normal
+//? Step 2: When calling on a function with a promise, using Async Await w/ try/catch (cleaner than .then/.catch)
+
+//! NOW GET OUT THERE AND PRACTICE IN REAL WORLD PROJECTS!!!!
 //===============================================
-//! First trial run working (without callbacks). Totals pushed to "newIncome" array
+//! My Personal First trial Run - working (without callbacks). Totals pushed to "newIncome" array
+//! Though this is not how callbacks work, I still managed to get this working properly!!!
 
 // let newIncome = [];
 // const getIncome = (income, callback) => {
